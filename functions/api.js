@@ -1,20 +1,20 @@
-const express = require("express");
-const axios = require("axios");
-const cors = require("cors");
+const expressAPI = require("express");
+const axiosAPI = require("axios");
+const corsAPI = require("cors");
 const serverlessApi = require("serverless-http");
-const bodyParser = require('body-parser');
+const bodyParserAPI = require('body-parser');
 
-const app = express();
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+const app = expressAPI();
+app.use(corsAPI());
+app.use(bodyParserAPI.urlencoded({ extended: true }));
+app.use(bodyParserAPI.json());
 
 const GOOGLE_SHEET_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiBR7BvYP--YlPUrPe3QOwedNmdunyLJAuL1HgH437seowpU3T9BKcXfuB7mjI1zk8joRrXmfLfXVe/pub?output=csv";
 
 async function fetchSheetData() {
   try {
-    const response = await axios.get(GOOGLE_SHEET_CSV_URL);
+    const response = await axiosAPI.get(GOOGLE_SHEET_CSV_URL);
     const rows = response.data.split("\n").map((row) => row.split(","));
 
     const headers = rows[0]; // First row as headers
