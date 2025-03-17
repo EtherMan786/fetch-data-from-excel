@@ -14,11 +14,11 @@ async function fetchSheetData() {
     const response = await axios.get(GOOGLE_SHEET_CSV_URL);
     const rows = response.data.split("\n").map((row) => row.split(","));
 
-    const headers = rows[0]; // First row as headers
+    const headers = rows[0];
     const jsonData = rows.slice(1).map((row) => {
       let obj = {};
       headers.forEach((header, index) => {
-        obj[header] = row[index]; // Map each column
+        obj[header.trim()] = row[index] ? row[index].trim() : "";
       });
       return obj;
     });
@@ -35,5 +35,5 @@ app.get("/data", async (req, res) => {
   res.json({ data });
 });
 
-// ✅ Export the handler for serverless platforms
-module.exports.handler = serverless(app);
+// ✅ Export with a valid function name
+module.exports = { handler: serverless(app) };
