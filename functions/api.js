@@ -1,7 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
-const serverless = require("serverless-http");
+const serverlessApi = require("serverless-http");
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -39,7 +39,7 @@ app.get("/data", async (req, res) => {
 });
 
 // ✅ Export the handler for serverless platforms
-module.exports.handler = serverless(app);
+module.exports.handler = serverlessApi(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
