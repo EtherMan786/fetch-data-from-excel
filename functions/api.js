@@ -37,6 +37,3 @@ app.get("/data", async (req, res) => {
 
 // ✅ Export the handler for serverless platforms
 module.exports.handler = serverless(app);
-
-const PORT = 5000;
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
