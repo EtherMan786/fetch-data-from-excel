@@ -9,17 +9,31 @@ async function fetchMenuData() {
     const data = await response.json();
     console.log("Fetched Data:", data); // Debugging
 
-    displayData(data);
+    // Check if data is nested inside 'data'
+    const menuData = Array.isArray(data) ? data : data.data;
+
+    if (!Array.isArray(menuData)) {
+      throw new Error("Invalid menu data format");
+    }
+
+    document.getElementById("loading").style.display = "none";
+    displayData(menuData);
   } catch (error) {
     console.error("Error fetching menu data:", error);
-    document.getElementById("menu").innerHTML = "<p>Failed to load menu.</p>";
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("error").innerHTML = "<p>Failed to load menu.</p>";
   }
 }
 
 // Display Data in HTML
 function displayData(menuData) {
-  const container = document.getElementById("menu");
+  const container = document.getElementById("menu-container");
   container.innerHTML = ""; // Clear previous content
+
+  if (!menuData || menuData.length === 0) {
+    container.innerHTML = "<p>No menu data available.</p>";
+    return;
+  }
 
   menuData.forEach((item) => {
     const div = document.createElement("div");
