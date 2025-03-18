@@ -18,11 +18,11 @@ async function fetchSheetData() {
     const response = await axiosAPI.get(GOOGLE_SHEET_CSV_URL);
     const rows = response.data.split("\n").map((row) => row.split(","));
 
-    const headers = rows[0]; // First row as headers
+    const headers = rows[0];
     const jsonData = rows.slice(1).map((row) => {
       let obj = {};
       headers.forEach((header, index) => {
-        obj[header] = row[index]; // Map each column
+        obj[header] = row[index];
       });
       return obj;
     });
@@ -39,8 +39,14 @@ app.get("/data", async (req, res) => {
   res.json({ data });
 });
 
+// ✅ Correcting the router issue
+// No need for app.use('/.netlify/functions/api', router);
+app.use('/.netlify/functions/api', app);
+
 // ✅ Export the handler for serverless platforms
 module.exports.handler = serverlessApi(app);
+
+// ✅ Remove the unnecessary app.listen for serverless
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
