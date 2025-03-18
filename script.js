@@ -1,4 +1,4 @@
-const API_URL = "https://miniature-space-bassoon-4x7xq5j7vvv35g4-5000.app.github.dev/data";
+const API_URL = "https://dining-page.netlify.app/.netlify/functions/api/data";
 
 // Fetch and Display Menu Data
 async function fetchMenuData() {
